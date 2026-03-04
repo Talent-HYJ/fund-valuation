@@ -1,0 +1,30 @@
+.card { background: #fff; border-radius: 16rpx; padding: 24rpx; margin-bottom: 24rpx; }
+.head .name-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12rpx; }
+.head .name { font-size: 34rpx; font-weight: 600; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.head .name-code { color: #999; font-size: 26rpx; font-weight: 400; margin-left: 8rpx; }
+.head .copy-icon { width: 40rpx; height: 40rpx; flex-shrink: 0; margin-left: 16rpx; }
+.nav-row { display: flex; justify-content: space-between; font-size: 28rpx; }
+.gztime { font-size: 24rpx; color: #999; margin-top: 12rpx; }
+.up { color: #e74c3c; }
+.down { color: #27ae60; }
+.row { display: flex; justify-content: space-between; padding: 20rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.row .label { color: #666; }
+.page-wrap { min-height: 100%; }
+.page-wrap.theme-red { background: #fff5f5; }
+.page-wrap.theme-green { background: #f5fff5; }
+.btn-edit { color: #fff; border-radius: 12rpx; margin-top: 24rpx; }
+.theme-red .btn-edit { background: #e74c3c; }
+.theme-green .btn-edit { background: #1aad19; }
+.error-card { text-align: center; padding: 48rpx; }
+.error-card .btn-retry { margin-top: 24rpx; color: #fff; }
+.theme-red .btn-retry { background: #e74c3c; }
+.theme-green .btn-retry { background: #1aad19; }
+.calendar-title { font-weight: 600; margin-bottom: 16rpx; }
+.week-row { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 8rpx; }
+.week-item { text-align: center; font-size: 22rpx; color: #999; }
+.day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8rpx; }
+.day-cell { min-height: 86rpx; border: 1rpx solid #f2f2f2; border-radius: 8rpx; padding: 8rpx; box-sizing: border-box; }
+.day-cell.empty { border: none; }
+.day-num { display: block; font-size: 22rpx; color: #666; text-align: center; }
+.day-pct { display: block; font-size: 20rpx; text-align: center; margin-top: 6rpx; }
+.day-pct.none { color: #bbb; }

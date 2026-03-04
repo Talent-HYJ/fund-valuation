@@ -1,0 +1,44 @@
+<view class="page-wrap theme-{{theme}}">
+<view class="container">
+  <view class="card" wx:if="{{loading}}">加载中...</view>
+  <view class="card error-card" wx:elif="{{!val && !loading}}">
+    <text>加载失败</text>
+    <button class="btn-retry" bindtap="loadValuation">重试</button>
+  </view>
+  <view wx:elif="{{val}}">
+    <view class="card head">
+      <view class="name-row">
+        <view class="name">{{val.name || code}}<text class="name-code" wx:if="{{val.name}}"> ({{code}})</text></view>
+        <image class="copy-icon" src="/images/icon-copy.svg" catchtap="copyFund"/>
+      </view>
+      <view class="nav-row">
+        <text>昨日净值 {{val.dwjz}}</text>
+        <text class="{{val.gszzl >= 0 ? 'up' : 'down'}}">估值 {{val.gsz}} ({{val.gszzl}}%)</text>
+      </view>
+      <view class="gztime" wx:if="{{val.gztime}}">估值时间 {{val.gztime}}</view>
+    </view>
+    <view class="card">
+      <view class="row"><text class="label">持仓份额</text><text>{{fund.shares}}</text></view>
+      <view class="row"><text class="label">成本净值</text><text>{{fund.cost}}</text></view>
+      <view class="row"><text class="label">持仓市值</text><text>¥ {{val.market}}</text></view>
+      <view class="row"><text class="label">今日收益</text><text class="{{val.todayEarn >= 0 ? 'up' : 'down'}}">¥ {{val.todayEarn}}</text></view>
+      <view class="row"><text class="label">累计收益</text><text class="{{val.earn >= 0 ? 'up' : 'down'}}">¥ {{val.earn}} ({{val.earnRate}}%)</text></view>
+      <view class="row"><text class="label">近1月涨跌幅</text><text class="{{val.rise30d == null ? '' : (val.rise30d >= 0 ? 'up' : 'down')}}">{{val.rise30dText}}</text></view>
+    </view>
+    <view class="card">
+      <view class="calendar-title">近一月涨跌</view>
+      <view class="week-row">
+        <text class="week-item" wx:for="{{calendar.weekdays}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="day-grid">
+        <view class="day-cell {{item.empty ? 'empty' : ''}}" wx:for="{{calendar.cells}}" wx:key="id">
+          <view wx:if="{{!item.empty}}">
+            <text class="day-num">{{item.day}}</text>
+            <text class="day-pct {{item.cls}}">{{item.pctText}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+</view>
