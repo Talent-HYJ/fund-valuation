@@ -42,7 +42,7 @@ Page({
   submit() {
     const { code, name, shares, cost, isEdit } = this.data
     if (!code) {
-      wx.showToast({ title: '请输入基金代码', icon: 'none' })
+      wx.showToast({ title: '请输入鸡蛋类型', icon: 'none' })
       return
     }
     if (!shares || Number(shares) <= 0) {
@@ -61,7 +61,7 @@ Page({
     } else {
       const ok = storage.addFund({ code: c, ...payload })
       if (!ok) {
-        wx.showToast({ title: '该基金已存在', icon: 'none' })
+        wx.showToast({ title: '该鸡蛋已存在', icon: 'none' })
         return
       }
       wx.showToast({ title: '添加成功' })

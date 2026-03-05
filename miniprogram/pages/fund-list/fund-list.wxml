@@ -2,9 +2,9 @@
 <view class="container">
   <view class="card summary" wx:if="{{hasFunds}}">
     <view class="summary-row">
-      <view class="col"><text class="label">今日收益</text><text class="value {{todayEarn >= 0 ? 'up' : 'down'}}">¥ {{todayEarn}}</text></view>
-      <view class="col"><text class="label">本月收益</text><text class="value {{monthEarn >= 0 ? 'up' : 'down'}}">¥ {{monthEarn}}</text></view>
-      <view class="col"><text class="label">累计收益</text><text class="value {{totalEarn >= 0 ? 'up' : 'down'}}">¥ {{totalEarn}}</text></view>
+      <view class="col"><text class="label">今日鸡蛋</text><text class="value {{todayEarn >= 0 ? 'up' : 'down'}}"><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{todayEarn}}</text></view>
+      <view class="col"><text class="label">本月鸡蛋</text><text class="value {{monthEarn >= 0 ? 'up' : 'down'}}"><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{monthEarn}}</text></view>
+      <view class="col"><text class="label">收货鸡蛋</text><text class="value {{totalEarn >= 0 ? 'up' : 'down'}}"><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{totalEarn}}</text></view>
     </view>
   </view>
 
@@ -30,6 +30,6 @@
   </view>
 
   <view class="card" wx:if="{{loading}}">加载中...</view>
-  <view class="card empty" wx:elif="{{!hasFunds}}">暂无基金，请在首页添加</view>
+  <view class="card empty" wx:elif="{{!hasFunds}}">暂无鸡蛋，请在首页添加</view>
 </view>
 </view>

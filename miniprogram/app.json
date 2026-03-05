@@ -7,7 +7,7 @@
     "pages/fund-detail/fund-detail"
   ],
   "window": {
-    "navigationBarTitleText": "暴富养基场",
+    "navigationBarTitleText": "记账小助手",
     "navigationBarBackgroundColor": "#333333",
     "navigationBarTextStyle": "white",
     "backgroundColor": "#f5f5f5"
@@ -18,8 +18,8 @@
     "selectedColor": "#1aad19",
     "backgroundColor": "#fff",
     "list": [
-      { "pagePath": "pages/index/index", "text": "基场" },
-      { "pagePath": "pages/fund-list/fund-list", "text": "基蛋" }
+      { "pagePath": "pages/index/index", "text": "鸡场" },
+      { "pagePath": "pages/fund-list/fund-list", "text": "鸡蛋" }
     ]
   }
 }

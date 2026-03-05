@@ -1,10 +1,10 @@
 const CODES = [
-  { key: 's_sh000001', name: '上证指数' },
-  { key: 's_sz399001', name: '深证成指' },
-  { key: 's_sz399006', name: '创业板指' },
-  { key: 's_sh000688', name: '科创50' },
-  { key: 's_sh000300', name: '沪深300' },
-  { key: 's_sh000016', name: '上证50' }
+  { key: 's_sh000001', name: 'SZZS' },
+  { key: 's_sz399001', name: 'SZCZ' },
+  { key: 's_sz399006', name: 'CYBZ' },
+  { key: 's_sh000688', name: 'KC50' },
+  { key: 's_sh000300', name: 'HS300' },
+  { key: 's_sh000016', name: 'SZ50' }
 ]
 const LIST = CODES.map(c => c.key).join(',')
 

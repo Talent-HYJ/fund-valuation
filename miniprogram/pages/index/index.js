@@ -172,7 +172,7 @@ Page({
     this.toggleSwipe(code, false)
     wx.showModal({
       title: '确认删除',
-      content: '确定移除该基金？',
+      content: '确定移除该鸡蛋？',
       success: (res) => {
         if (res.confirm) {
           storage.removeFund(code)

@@ -76,7 +76,7 @@ function fetchLastDayChange(code) {
           resolve(parseFloat(direct.toFixed(2)))
           return
         }
-        // 兜底：用最后两个有效净值计算上一交易日涨跌幅
+        // 兜底：用最后两个有效净值计算昨天份量涨跌幅
         const vals = []
         for (let i = trend.length - 1; i >= 0; i--) {
           const y = trend[i] && trend[i].y != null ? parseFloat(trend[i].y) : NaN

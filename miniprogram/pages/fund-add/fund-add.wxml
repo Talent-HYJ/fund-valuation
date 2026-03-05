@@ -2,15 +2,15 @@
 <view class="container">
   <view class="card">
     <view class="form-item">
-      <text class="label">基金代码</text>
+      <text class="label">鸡蛋类型</text>
       <input placeholder="6位代码" value="{{code}}" bindinput="onCodeInput" class="input" disabled="{{isEdit}}" />
     </view>
     <view class="form-item">
-      <text class="label">持有份额</text>
+      <text class="label">鸡蛋份额</text>
       <input type="digit" placeholder="份" value="{{shares}}" bindinput="onSharesInput" class="input" />
     </view>
     <view class="form-item">
-      <text class="label">成本净值</text>
+      <text class="label">鸡蛋单价</text>
       <input type="digit" placeholder="元/份" value="{{cost}}" bindinput="onCostInput" class="input" />
     </view>
   </view>

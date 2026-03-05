@@ -12,21 +12,21 @@
         <image class="copy-icon" src="/images/icon-copy.svg" catchtap="copyFund"/>
       </view>
       <view class="nav-row">
-        <text>昨日净值 {{val.dwjz}}</text>
-        <text class="{{val.gszzl >= 0 ? 'up' : 'down'}}">估值 {{val.gsz}} ({{val.gszzl}}%)</text>
+        <text>昨日份量 {{val.dwjz}}</text>
+        <text class="{{val.gszzl >= 0 ? 'up' : 'down'}}">份量 {{val.gsz}} ({{val.gszzl}}%)</text>
       </view>
-      <view class="gztime" wx:if="{{val.gztime}}">估值时间 {{val.gztime}}</view>
+      <view class="gztime" wx:if="{{val.gztime}}">份量时间 {{val.gztime}}</view>
     </view>
     <view class="card">
-      <view class="row"><text class="label">持仓份额</text><text>{{fund.shares}}</text></view>
-      <view class="row"><text class="label">成本净值</text><text>{{fund.cost}}</text></view>
-      <view class="row"><text class="label">持仓市值</text><text>¥ {{val.market}}</text></view>
-      <view class="row"><text class="label">今日收益</text><text class="{{val.todayEarn >= 0 ? 'up' : 'down'}}">¥ {{val.todayEarn}}</text></view>
-      <view class="row"><text class="label">累计收益</text><text class="{{val.earn >= 0 ? 'up' : 'down'}}">¥ {{val.earn}} ({{val.earnRate}}%)</text></view>
-      <view class="row"><text class="label">近1月涨跌幅</text><text class="{{val.rise30d == null ? '' : (val.rise30d >= 0 ? 'up' : 'down')}}">{{val.rise30dText}}</text></view>
+      <view class="row"><text class="label">鸡蛋份额</text><text>{{fund.shares}}</text></view>
+      <view class="row"><text class="label">鸡蛋单价</text><text>{{fund.cost}}</text></view>
+      <view class="row"><text class="label">鸡蛋总价</text><text><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{val.market}}</text></view>
+      <view class="row"><text class="label">今日鸡蛋</text><text class="{{val.todayEarn >= 0 ? 'up' : 'down'}}"><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{val.todayEarn}}</text></view>
+      <view class="row"><text class="label">收货鸡蛋</text><text class="{{val.earn >= 0 ? 'up' : 'down'}}"><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{val.earn}} ({{val.earnRate}}%)</text></view>
+      <view class="row"><text class="label">近1月份量</text><text class="{{val.rise30d == null ? '' : (val.rise30d >= 0 ? 'up' : 'down')}}">{{val.rise30dText}}</text></view>
     </view>
     <view class="card">
-      <view class="calendar-title">近一月涨跌</view>
+      <view class="calendar-title">近1月份量</view>
       <view class="week-row">
         <text class="week-item" wx:for="{{calendar.weekdays}}" wx:key="*this">{{item}}</text>
       </view>
