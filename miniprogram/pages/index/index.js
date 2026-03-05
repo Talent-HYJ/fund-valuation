@@ -18,7 +18,7 @@ Page({
     if (tb) tb.setData({ selected: 0, theme: getApp().globalData.theme })
     this.setData({ theme: getApp().globalData.theme })
     this.loadData()
-    indicesApi.fetchIndices().then(indices => this.setData({ indices })).catch(() => {})
+    indicesApi.fetchIndices().then(indices => this.setData({ indices })).catch(() => wx.showToast({ title: '指数加载失败', icon: 'none' }))
     this._startRefreshTimer()
   },
 
@@ -117,7 +117,7 @@ Page({
 
   onPullDownRefresh() {
     this.loadData()
-    indicesApi.fetchIndices().then(indices => this.setData({ indices })).catch(() => {})
+    indicesApi.fetchIndices().then(indices => this.setData({ indices })).catch(() => wx.showToast({ title: '指数加载失败', icon: 'none' }))
   },
 
   toAdd() {

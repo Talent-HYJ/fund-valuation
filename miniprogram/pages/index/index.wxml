@@ -14,7 +14,7 @@
           <view class="idx" wx:for="{{indices}}" wx:key="name" style="{{item.bgStyle}}">
             <text class="idx-name">{{item.name}}</text>
             <text class="idx-val">{{item.current}}</text>
-            <text class="idx-pct {{item.isUp ? 'up' : 'down'}}" wx:if="{{item.changePct}}">{{item.changePct}}</text>
+            <text class="idx-pct {{item.isUp ? 'up' : 'down'}}" wx:if="{{item.changePct}}">{{item.changePct > 0 ? '+' : ''}}{{item.changePct}}%</text>
           </view>
         </view>
       </scroll-view>
