@@ -16,6 +16,7 @@ function addFund(fund) {
     name: fund.name || '',
     shares: Number(fund.shares) || 0,
     cost: Number(fund.cost) || 0,
+    replenishThreshold: Number(fund.replenishThreshold) || 3,
     addTime: Date.now()
   })
   setFunds(list)

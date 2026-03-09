@@ -6,6 +6,7 @@ Page({
     name: '',
     shares: '',
     cost: '',
+    replenishThreshold: '',
     isEdit: false,
     theme: 'green'
   },
@@ -24,7 +25,8 @@ Page({
         code: opts.code,
         name: opts.name ? decodeURIComponent(opts.name) : '',
         shares: opts.shares || '',
-        cost: opts.cost || ''
+        cost: opts.cost || '',
+        replenishThreshold: opts.replenishThreshold != null ? opts.replenishThreshold : ''
       })
     }
   },
@@ -38,9 +40,12 @@ Page({
   onCostInput(e) {
     this.setData({ cost: e.detail.value })
   },
+  onReplenishThresholdInput(e) {
+    this.setData({ replenishThreshold: e.detail.value })
+  },
 
   submit() {
-    const { code, name, shares, cost, isEdit } = this.data
+    const { code, name, shares, cost, replenishThreshold, isEdit } = this.data
     if (!code) {
       wx.showToast({ title: '请输入鸡蛋类型', icon: 'none' })
       return
@@ -54,7 +59,8 @@ Page({
       return
     }
     const c = code.padStart(6, '0')
-    const payload = { name: name || c, shares: Number(shares), cost: Number(cost) }
+    const threshold = replenishThreshold ? Number(replenishThreshold) : 3
+    const payload = { name: name || c, shares: Number(shares), cost: Number(cost), replenishThreshold: threshold }
     if (isEdit) {
       storage.updateFund(c, payload)
       wx.showToast({ title: '已更新' })

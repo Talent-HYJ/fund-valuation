@@ -59,6 +59,10 @@
           <text>我的鸡蛋</text>
           <text class="{{item.earn >= 0 ? 'up' : 'down'}}"><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{item.earn}}</text>
         </view>
+        <view class="item-row" wx:if="{{item.presetReplenish != null}}">
+          <text>补蛋阈值({{item.replenishThreshold || 3}}%)</text>
+          <text><image class="amount-icon" src="/images/tab-fund.svg" mode="aspectFit"></image>{{item.presetReplenish}}</text>
+        </view>
       </view>
     </view>
     </view>

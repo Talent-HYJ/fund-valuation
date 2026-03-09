@@ -13,6 +13,10 @@
       <text class="label">鸡蛋单价</text>
       <input type="digit" placeholder="元/份" value="{{cost}}" bindinput="onCostInput" class="input" />
     </view>
+    <view class="form-item">
+      <text class="label">补蛋阈值</text>
+      <input type="digit" placeholder="默认3%" value="{{replenishThreshold}}" bindinput="onReplenishThresholdInput" class="input" />
+    </view>
   </view>
   <button class="btn-submit" bindtap="submit">确认添加</button>
 </view>

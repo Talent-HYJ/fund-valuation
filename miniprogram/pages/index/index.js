@@ -75,9 +75,14 @@ Page({
         const costTotal = f.shares * f.cost
         const todayEarn = (f.shares * (v.gsz - v.dwjz)).toFixed(2)
         const earn = (f.shares * v.gsz - costTotal).toFixed(2)
-        todayEarnings += parseFloat(todayEarn)
+        const te = parseFloat(todayEarn)
+        const threshold = f.replenishThreshold || 3
+        const mkt = parseFloat(market)
+        const loss = costTotal - mkt
+        const presetReplenish = loss > 0 && threshold > 0 ? Math.max(0, loss * 100 / threshold - mkt).toFixed(2) : null
+        todayEarnings += te
         totalAmount += parseFloat(market)
-        return { ...f, ...v, market, todayEarn, earn, lastDayPct: lastDayPct == null ? null : lastDayPct }
+        return { ...f, ...v, market, todayEarn, earn, presetReplenish, lastDayPct: lastDayPct == null ? null : lastDayPct }
       })
       const costTotal = funds.reduce((s, f) => s + f.shares * f.cost, 0)
       const todayStr = todayEarnings.toFixed(2)
@@ -94,7 +99,7 @@ Page({
       if (tb) tb.setData({ theme: getApp().globalData.theme })
     }).catch(() => {
       if (that._loadReqId !== reqId) return
-      const list = funds.map(f => ({ ...f, gsz: null, gszzl: null, dwjz: null, market: null, todayEarn: null, earn: null, lastDayPct: null }))
+      const list = funds.map(f => ({ ...f, gsz: null, gszzl: null, dwjz: null, market: null, todayEarn: null, earn: null, presetReplenish: null, lastDayPct: null }))
       that.setData({ list, todayEarnings: '0.00', totalEarnings: '0.00', totalAmount: '0.00', loading: false, theme: getApp().globalData.theme })
       getApp().updateTheme('0.00')
       const tb = that.getTabBar()
@@ -163,7 +168,7 @@ Page({
     if (!f) return
     this.toggleSwipe(code, false)
     wx.navigateTo({
-      url: `/pages/fund-add/fund-add?edit=1&code=${f.code}&name=${encodeURIComponent(f.name || '')}&shares=${f.shares}&cost=${f.cost}`
+      url: `/pages/fund-add/fund-add?edit=1&code=${f.code}&name=${encodeURIComponent(f.name || '')}&shares=${f.shares}&cost=${f.cost}&replenishThreshold=${f.replenishThreshold != null ? f.replenishThreshold : ''}`
     })
   },
 
