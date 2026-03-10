@@ -5,7 +5,7 @@
 .summary .value { font-size: 28rpx; font-weight: 500; }
 .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16rpx; }
 .cal-title { font-weight: 600; font-size: 30rpx; }
-.page-wrap { min-height: 100%; padding-bottom: calc(100rpx + env(safe-area-inset-bottom)); box-sizing: border-box; }
+.page-wrap { min-height: 100%; padding-bottom: calc(120rpx + 50px + env(safe-area-inset-bottom)); box-sizing: border-box; }
 .page-wrap.theme-red { background: #fff5f5; }
 .page-wrap.theme-green { background: #f5fff5; }
 .cal-arrow { font-size: 40rpx; padding: 0 20rpx; }
@@ -22,3 +22,6 @@
 .up { color: #e74c3c; }
 .down { color: #27ae60; }
 .empty { text-align: center; color: #999; padding: 48rpx; }
+.sync-bar { position: fixed; bottom: calc(50px + env(safe-area-inset-bottom)); left: 0; right: 0; padding: 16rpx 24rpx; background: #fff; border-top: 1rpx solid #eee; }
+.sync-btn { background: #1aad19; color: #fff; border-radius: 12rpx; font-size: 28rpx; }
+.sync-bar.theme-red .sync-btn { background: #e74c3c; }

@@ -1,5 +1,6 @@
 const THEME = { red: { color: '#e74c3c', bg: '#fff5f5' }, green: { color: '#1aad19', bg: '#f5fff5' } }
 const fundApi = require('./utils/fund')
+const sync = require('./utils/sync')
 
 App({
   globalData: {
@@ -9,6 +10,15 @@ App({
   onLaunch() {
     const funds = wx.getStorageSync('fund_list') || []
     this.globalData.funds = funds
+    if (!funds.length && sync.isConfigured()) {
+      sync.syncDownloadSilent().then(r => {
+        if (r?.ok) {
+          const pages = getCurrentPages()
+          const cur = pages[pages.length - 1]
+          if (cur?.route === 'pages/fund-list/fund-list' && cur.loadData) cur.loadData(true)
+        }
+      }).catch(() => {})
+    }
     const saved = wx.getStorageSync('theme') || 'green'
     this.globalData.theme = saved
     this.applyTheme(saved)

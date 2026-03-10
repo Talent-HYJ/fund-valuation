@@ -1,5 +1,6 @@
 const storage = require('../../utils/storage')
 const fundApi = require('../../utils/fund')
+const sync = require('../../utils/sync')
 
 function buildCalendar(dailyEarnMap, year, month) {
   const weekdays = ['日', '一', '二', '三', '四', '五', '六']
@@ -27,6 +28,7 @@ Page({
   data: {
     hasFunds: false,
     loading: false,
+    syncing: false,
     todayEarn: '0.00',
     monthEarn: '0.00',
     totalEarn: '0.00',
@@ -188,5 +190,35 @@ Page({
 
   onPullDownRefresh() {
     this.loadData(true)
+  },
+
+  onSync() {
+    if (this.data.syncing) return
+    if (!sync.isConfigured()) {
+      wx.showToast({ title: '请先配置 Supabase', icon: 'none' })
+      return
+    }
+    const upLeft = sync.remainQuota('upload')
+    const dlLeft = sync.remainQuota('download')
+    wx.showActionSheet({
+      itemList: [`上传到云端（剩余 ${upLeft} 次）`, `从云端下载（剩余 ${dlLeft} 次）`],
+      success: (res) => {
+        this.setData({ syncing: true })
+        const isUpload = res.tapIndex === 0
+        const fn = isUpload ? sync.syncUpload : sync.syncDownload
+        fn().then(result => {
+          if (result.ok) {
+            wx.showToast({ title: isUpload ? '上传成功' : '下载成功' })
+            if (!isUpload) this.loadData(true)
+          } else {
+            wx.showToast({ title: result.msg || '操作失败', icon: 'none' })
+          }
+        }).catch(err => {
+          wx.showToast({ title: err.message || '同步失败', icon: 'none' })
+        }).finally(() => {
+          this.setData({ syncing: false })
+        })
+      }
+    })
   }
 })

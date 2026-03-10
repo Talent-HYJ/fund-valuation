@@ -32,4 +32,7 @@
   <view class="card" wx:if="{{loading}}">加载中...</view>
   <view class="card empty" wx:elif="{{!hasFunds}}">暂无鸡蛋，请在首页添加</view>
 </view>
+<view class="sync-bar theme-{{theme}}">
+  <button class="sync-btn" bindtap="onSync" disabled="{{syncing}}">{{syncing ? '同步中...' : '数据同步'}}</button>
+</view>
 </view>

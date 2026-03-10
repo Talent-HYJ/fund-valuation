@@ -21,7 +21,7 @@
     "list": [
       { "pagePath": "pages/index/index", "text": "鸡场" },
       { "pagePath": "pages/watchlist/watchlist", "text": "自选" },
-      { "pagePath": "pages/fund-list/fund-list", "text": "鸡蛋" }
+      { "pagePath": "pages/fund-list/fund-list", "text": "我的" }
     ]
   }
 }

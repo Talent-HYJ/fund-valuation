@@ -5,7 +5,7 @@ Component({
     list: [
       { pagePath: '/pages/index/index', text: '鸡场', icon: '/images/tab-home.svg', iconActive: '/images/tab-home-active.svg', iconActiveRed: '/images/tab-home-active-red.svg' },
       { pagePath: '/pages/watchlist/watchlist', text: '自选', icon: '/images/tab-star.svg', iconActive: '/images/tab-star-active.svg', iconActiveRed: '/images/tab-star-active-red.svg' },
-      { pagePath: '/pages/fund-list/fund-list', text: '鸡蛋', icon: '/images/tab-fund.svg', iconActive: '/images/tab-fund-active.svg', iconActiveRed: '/images/tab-fund-active-red.svg' }
+      { pagePath: '/pages/fund-list/fund-list', text: '我的', icon: '/images/tab-fund.svg', iconActive: '/images/tab-fund-active.svg', iconActiveRed: '/images/tab-fund-active-red.svg' }
     ]
   },
   methods: {
