@@ -223,4 +223,80 @@ function fetchDailyTrend(code) {
   })
 }
 
-module.exports = { fetchValuation, fetchValuationBatch, fetchLastDayChange, fetchLastDayChangeBatch, fetchPeriodChanges, fetchDailyTrend }
+const FUND_LIST_CACHE_KEY = 'fund_list_cache'
+
+function parseFundListData(s) {
+  if (s == null) return null
+  const str = typeof s === 'string' ? s : String(s)
+  try {
+    const start = str.indexOf('var r = ')
+    if (start === -1) return null
+    const arrStart = str.indexOf('[', start)
+    const arrEnd = str.lastIndexOf('];')
+    if (arrStart === -1 || arrEnd <= arrStart) return null
+    const arr = JSON.parse(str.substring(arrStart, arrEnd + 1))
+    return Array.isArray(arr) ? arr : null
+  } catch (e) {
+    return null
+  }
+}
+
+function preloadFundList() {
+  wx.request({
+    url: 'https://fund.eastmoney.com/js/fundcode_search.js',
+    header: {
+      Referer: 'https://fund.eastmoney.com/',
+      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0'
+    },
+    success(res) {
+      if (res.statusCode !== 200 || res.data == null) return
+      const arr = parseFundListData(res.data)
+      if (arr && arr.length > 0) {
+        try { wx.setStorageSync(FUND_LIST_CACHE_KEY, arr) } catch (e) {}
+      }
+    }
+  })
+}
+
+function searchFund(keyword) {
+  const kw = String(keyword || '').trim()
+  if (!kw) return Promise.resolve([])
+  const code = kw.padStart(6, '0')
+  if (/^\d{6}$/.test(code)) {
+    return fetchValuation(code).then(v => (v && v.code ? [{ code: v.code, name: v.name || v.code }] : [])).catch(() => [])
+  }
+  return searchFundLocal(kw)
+}
+
+function filterByKeyword(arr, kw) {
+  return arr.filter(f => (f[2] || '').toLowerCase().includes(kw) || (f[0] || '').includes(kw)).slice(0, 20).map(f => ({ code: f[0], name: f[2] || f[0] }))
+}
+
+function searchFundLocal(keyword) {
+  const kw = (keyword || '').trim().toLowerCase()
+  if (!kw) return Promise.resolve([])
+  const cached = wx.getStorageSync(FUND_LIST_CACHE_KEY)
+  if (cached && Array.isArray(cached) && cached.length > 0) {
+    return Promise.resolve(filterByKeyword(cached, kw))
+  }
+  return new Promise((resolve) => {
+    wx.request({
+      url: 'https://fund.eastmoney.com/js/fundcode_search.js',
+      header: { Referer: 'https://fund.eastmoney.com/' },
+      success(res) {
+        if (res.statusCode === 200 && res.data != null) {
+          const arr = parseFundListData(res.data)
+          if (arr && arr.length > 0) {
+            try { wx.setStorageSync(FUND_LIST_CACHE_KEY, arr) } catch (e) {}
+            resolve(filterByKeyword(arr, kw))
+            return
+          }
+        }
+        resolve([])
+      },
+      fail: () => resolve([])
+    })
+  })
+}
+
+module.exports = { fetchValuation, fetchValuationBatch, fetchLastDayChange, fetchLastDayChangeBatch, fetchPeriodChanges, fetchDailyTrend, searchFund, preloadFundList }

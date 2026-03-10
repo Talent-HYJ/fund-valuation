@@ -1,0 +1,57 @@
+<view class="page-wrap theme-{{theme}}">
+<view class="container">
+  <view class="search-mask" wx:if="{{searchLoading || searchList.length}}" catchtap="closeSearch"></view>
+  <view class="search-wrap">
+    <view class="card search-card">
+      <view class="search-row">
+        <input class="search-input" placeholder="输入基金名称或代码" value="{{keyword}}" bindinput="onKeywordInput" focus="{{false}}"/>
+      </view>
+    </view>
+    <view class="search-result-dropdown" wx:if="{{searchLoading || searchList.length}}">
+      <view class="search-result-inner" wx:if="{{searchLoading}}">
+        <text class="tip">搜索中...</text>
+      </view>
+      <scroll-view class="search-result-scroll" scroll-y wx:elif="{{searchList.length}}">
+        <view class="search-result-inner">
+        <view class="result-item" wx:for="{{searchList}}" wx:key="code">
+          <text class="result-name">{{item.name}}</text>
+          <text class="result-code">{{item.code}}</text>
+          <view class="result-add-btn" data-item="{{item}}" bindtap="addWatch">+</view>
+        </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <view class="card list-card" wx:if="{{list.length}}">
+    <view class="list-title">我的自选</view>
+    <view class="item {{item.open ? 'opened' : ''}}" wx:for="{{list}}" wx:key="code">
+      <view class="swipe-actions">
+        <view class="action-btn action-fund" data-code="{{item.code}}" data-name="{{item.name}}" bindtap="addToFund">移入鸡场</view>
+        <view class="action-btn action-del" data-code="{{item.code}}" bindtap="removeWatch">移除</view>
+      </view>
+      <view
+        class="item-main {{item.open ? 'open' : ''}}"
+        data-code="{{item.code}}"
+        bindtap="toDetail"
+        bindtouchstart="onItemTouchStart"
+        bindtouchend="onItemTouchEnd"
+      >
+        <text class="item-name">{{item.name}}</text>
+        <text class="item-code">{{item.code}}</text>
+        <view class="item-val" wx:if="{{item.gsz != null}}">
+          <text>今日份额 {{item.gsz}}</text>
+          <text class="{{item.gszzl >= 0 ? 'up' : 'down'}}" wx:if="{{item.gszzl != null}}">{{item.gszzl >= 0 ? '+' : ''}}{{item.gszzl}}%</text>
+        </view>
+        <view class="item-val" wx:if="{{item.dwjz != null}}">
+          <text>昨日份额 {{item.dwjz}}</text>
+          <text class="{{item.lastDayPct == null ? '' : (item.lastDayPct >= 0 ? 'up' : 'down')}}" wx:if="{{item.lastDayPct != null}}">{{item.lastDayPct >= 0 ? '+' : ''}}{{item.lastDayPct}}%</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="card empty" wx:else>
+    <text>暂无自选，搜索鸡蛋名称或代码后添加</text>
+  </view>
+</view>
+</view>

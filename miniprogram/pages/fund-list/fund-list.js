@@ -38,7 +38,7 @@ Page({
 
   onShow() {
     const tb = this.getTabBar()
-    if (tb) tb.setData({ selected: 1, theme: getApp().globalData.theme })
+    if (tb) tb.setData({ selected: 2, theme: getApp().globalData.theme })
     const now = new Date()
     this.setData({ theme: getApp().globalData.theme, calYear: now.getFullYear(), calMonth: now.getMonth() + 1 })
     this.loadData(true)

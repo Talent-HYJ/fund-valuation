@@ -1,4 +1,5 @@
 const storage = require('../../utils/storage')
+const watchlistStorage = require('../../utils/watchlist')
 
 Page({
   data: {
@@ -18,7 +19,7 @@ Page({
   onLoad(opts) {
     const theme = getApp().globalData.theme || 'green'
     getApp().applyTheme(theme)
-    this.setData({ theme })
+    this.setData({ theme, fromWatchlist: opts.fromWatchlist === '1' })
     if (opts.edit === '1' && opts.code) {
       this.setData({
         isEdit: true,
@@ -27,6 +28,11 @@ Page({
         shares: opts.shares || '',
         cost: opts.cost || '',
         replenishThreshold: opts.replenishThreshold != null ? opts.replenishThreshold : ''
+      })
+    } else if (opts.fromWatchlist === '1' && opts.code) {
+      this.setData({
+        code: opts.code,
+        name: opts.name ? decodeURIComponent(opts.name) : ''
       })
     }
   },
@@ -45,7 +51,7 @@ Page({
   },
 
   submit() {
-    const { code, name, shares, cost, replenishThreshold, isEdit } = this.data
+    const { code, name, shares, cost, replenishThreshold, isEdit, fromWatchlist } = this.data
     if (!code) {
       wx.showToast({ title: '请输入鸡蛋类型', icon: 'none' })
       return
@@ -70,6 +76,7 @@ Page({
         wx.showToast({ title: '该鸡蛋已存在', icon: 'none' })
         return
       }
+      if (fromWatchlist) watchlistStorage.removeFromWatchlist(c)
       wx.showToast({ title: '添加成功' })
     }
     const app = getApp()

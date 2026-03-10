@@ -29,6 +29,7 @@
       <view class="list-title">全部鸡蛋</view>
       <view class="item {{item.open ? 'opened' : ''}}" wx:for="{{list}}" wx:key="code">
       <view class="swipe-actions">
+        <view class="action-btn action-watch" data-code="{{item.code}}" data-name="{{item.name}}" bindtap="addToWatchlist">移入自选</view>
         <view class="action-btn action-edit" data-code="{{item.code}}" bindtap="editFund">修改</view>
         <view class="action-btn action-del" data-code="{{item.code}}" bindtap="deleteFund">删除</view>
       </view>

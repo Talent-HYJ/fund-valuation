@@ -1,4 +1,5 @@
 const storage = require('../../utils/storage')
+const watchlistStorage = require('../../utils/watchlist')
 const fundApi = require('../../utils/fund')
 const indicesApi = require('../../utils/indices')
 
@@ -160,6 +161,22 @@ Page({
       return { ...item, open: false }
     })
     this.setData({ list })
+  },
+
+  addToWatchlist(e) {
+    const code = e.currentTarget.dataset.code
+    const name = e.currentTarget.dataset.name || code
+    if (!code) return
+    this.toggleSwipe(code, false)
+    if (watchlistStorage.addToWatchlist({ code, name })) {
+      storage.removeFund(code)
+      const app = getApp()
+      if (app.globalData) app.globalData.funds = storage.getFunds()
+      this.loadData()
+      wx.showToast({ title: '已移入自选' })
+    } else {
+      wx.showToast({ title: '已在自选中', icon: 'none' })
+    }
   },
 
   editFund(e) {

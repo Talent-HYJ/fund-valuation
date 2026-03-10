@@ -1,4 +1,5 @@
 const THEME = { red: { color: '#e74c3c', bg: '#fff5f5' }, green: { color: '#1aad19', bg: '#f5fff5' } }
+const fundApi = require('./utils/fund')
 
 App({
   globalData: {
@@ -11,6 +12,7 @@ App({
     const saved = wx.getStorageSync('theme') || 'green'
     this.globalData.theme = saved
     this.applyTheme(saved)
+    fundApi.preloadFundList()
   },
   updateTheme(todayEarnings) {
     const theme = parseFloat(todayEarnings) > 0 ? 'red' : 'green'

@@ -3,6 +3,7 @@
   "pages": [
     "pages/index/index",
     "pages/fund-list/fund-list",
+    "pages/watchlist/watchlist",
     "pages/fund-add/fund-add",
     "pages/fund-detail/fund-detail"
   ],
@@ -19,6 +20,7 @@
     "backgroundColor": "#fff",
     "list": [
       { "pagePath": "pages/index/index", "text": "鸡场" },
+      { "pagePath": "pages/watchlist/watchlist", "text": "自选" },
       { "pagePath": "pages/fund-list/fund-list", "text": "鸡蛋" }
     ]
   }
