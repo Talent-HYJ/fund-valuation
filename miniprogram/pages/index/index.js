@@ -15,9 +15,12 @@ Page({
   },
 
   onShow() {
+    const app = getApp()
+    const theme = app.globalData.theme || 'green'
+    app.applyTheme(theme)
     const tb = this.getTabBar()
-    if (tb) tb.setData({ selected: 0, theme: getApp().globalData.theme })
-    this.setData({ theme: getApp().globalData.theme })
+    if (tb) tb.setData({ selected: 0, theme })
+    this.setData({ theme })
     this.loadData()
     indicesApi.fetchIndices().then(indices => this.setData({ indices })).catch(() => wx.showToast({ title: '指数加载失败', icon: 'none' }))
     this._startRefreshTimer()
@@ -141,18 +144,65 @@ Page({
   },
 
   onItemTouchStart(e) {
-    this._touchStartX = e.changedTouches[0].clientX
+    this._touchStartX = e.touches[0].clientX
+    this._touchStartY = e.touches[0].clientY
     this._touchCode = e.currentTarget.dataset.code
+    this._touchIndex = e.currentTarget.dataset.index
+    this._swipeLocked = false
+    const idx = this._touchIndex
+    if (idx === undefined) return
+    const list = this.data.list || []
+    this._touchStartOpen = list[idx] && list[idx].open
+    try {
+      this._rpxScale = 750 / wx.getSystemInfoSync().windowWidth
+    } catch (err) {
+      this._rpxScale = 2
+    }
+  },
+
+  onItemTouchMove(e) {
+    const idx = e.currentTarget.dataset.index
+    const code = e.currentTarget.dataset.code
+    if (idx === undefined || this._touchCode !== code || this._touchIndex !== idx) return
+    const startX = this._touchStartX || 0
+    const startY = this._touchStartY || 0
+    const curX = e.touches[0].clientX
+    const curY = e.touches[0].clientY
+    const dx = curX - startX
+    const dy = curY - startY
+    if (this._swipeLocked === false) {
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 8) this._swipeLocked = true
+      else if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) return
+    }
+    if (!this._swipeLocked) return
+    const now = Date.now()
+    if (this._moveThrottle && now - this._moveThrottle < 16) return
+    this._moveThrottle = now
+    const scale = this._rpxScale || 2
+    const base = this._touchStartOpen ? -436 : 0
+    const offset = Math.max(-436, Math.min(0, base + dx * scale))
+    const list = this.data.list || []
+    if (!list[idx]) return
+    this.setData({ [`list[${idx}].swipeOffset`]: offset })
   },
 
   onItemTouchEnd(e) {
     const startX = this._touchStartX || 0
     const endX = e.changedTouches[0].clientX
     const code = e.currentTarget.dataset.code
-    if (!code || this._touchCode !== code) return
-    const diff = endX - startX
-    if (diff < -40) this.toggleSwipe(code, true)
-    if (diff > 40) this.toggleSwipe(code, false)
+    const idx = e.currentTarget.dataset.index
+    if (code == null || idx === undefined || this._touchCode !== code) return
+    const list = (this.data.list || []).slice()
+    const cur = list[idx]
+    const scale = this._rpxScale || 2
+    const base = this._touchStartOpen ? -436 : 0
+    const curOffset = cur && cur.swipeOffset != null ? cur.swipeOffset : base + (endX - startX) * scale
+    const open = curOffset < -218
+    list.forEach((item, i) => {
+      if (i === idx) list[i] = { ...item, open, swipeOffset: null }
+      else if (open) list[i] = { ...item, open: false }
+    })
+    this.setData({ list })
   },
 
   toggleSwipe(code, open) {

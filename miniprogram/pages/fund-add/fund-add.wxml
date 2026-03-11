@@ -1,5 +1,8 @@
 <view class="page-wrap theme-{{theme}}">
 <view class="container">
+  <view class="ocr-row">
+    <button class="btn-ocr" bindtap="chooseImageForOcr" disabled="{{ocrLoading}}">{{ocrLoading ? '识别中...' : '从图片识别导入'}}</button>
+  </view>
   <view class="card">
     <view class="form-item">
       <text class="label">鸡蛋类型</text>

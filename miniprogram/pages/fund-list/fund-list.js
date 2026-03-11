@@ -39,10 +39,13 @@ Page({
   },
 
   onShow() {
+    const app = getApp()
+    const theme = app.globalData.theme || 'green'
+    app.applyTheme(theme)
     const tb = this.getTabBar()
-    if (tb) tb.setData({ selected: 2, theme: getApp().globalData.theme })
+    if (tb) tb.setData({ selected: 2, theme })
     const now = new Date()
-    this.setData({ theme: getApp().globalData.theme, calYear: now.getFullYear(), calMonth: now.getMonth() + 1 })
+    this.setData({ theme, calYear: now.getFullYear(), calMonth: now.getMonth() + 1 })
     this.loadData(true)
   },
 

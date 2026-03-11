@@ -25,16 +25,19 @@
 
   <view class="card list-card" wx:if="{{list.length}}">
     <view class="list-title">我的自选</view>
-    <view class="item {{item.open ? 'opened' : ''}}" wx:for="{{list}}" wx:key="code">
+    <view class="item {{(item.open || item.swipeOffset != null) ? 'opened' : ''}}" wx:for="{{list}}" wx:for-index="idx" wx:key="code">
       <view class="swipe-actions">
         <view class="action-btn action-fund" data-code="{{item.code}}" data-name="{{item.name}}" bindtap="addToFund">移入鸡场</view>
         <view class="action-btn action-del" data-code="{{item.code}}" bindtap="removeWatch">移除</view>
       </view>
       <view
-        class="item-main {{item.open ? 'open' : ''}}"
+        class="item-main {{item.open ? 'open' : ''}} {{item.swipeOffset != null ? 'dragging' : ''}}"
+        style="transform: translateX({{item.swipeOffset != null ? item.swipeOffset : (item.open ? -296 : 0)}}rpx)"
         data-code="{{item.code}}"
+        data-index="{{idx}}"
         bindtap="toDetail"
         bindtouchstart="onItemTouchStart"
+        bindtouchmove="onItemTouchMove"
         bindtouchend="onItemTouchEnd"
       >
         <text class="item-name">{{item.name}}</text>

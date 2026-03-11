@@ -115,9 +115,11 @@
   position: relative;
   background: #fff;
   padding: 20rpx 0;
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease-out;
 }
-.item-main.open { transform: translateX(-296rpx); }
+.item-main.dragging {
+  transition: none;
+}
 .item-name { display: block; font-size: 28rpx; margin-bottom: 4rpx; }
 .item-code { font-size: 24rpx; color: #999; margin-bottom: 4rpx; }
 .item-val { display: flex; justify-content: space-between; font-size: 24rpx; color: #666; }

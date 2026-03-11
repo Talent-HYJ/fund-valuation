@@ -98,9 +98,11 @@
   position: relative;
   background: #fff;
   padding: 20rpx 0;
-  transition: transform 0.2s ease;
+  transition: transform 0.15s ease-out;
 }
-.item-main.open { transform: translateX(-436rpx); }
+.item-main.dragging {
+  transition: none;
+}
 .item-name { font-size: 28rpx; margin-bottom: 8rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .item-code { color: #999; font-size: 24rpx; margin-left: 4rpx; }
 .item-row { display: flex; justify-content: space-between; font-size: 24rpx; color: #666; }

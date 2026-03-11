@@ -1,5 +1,6 @@
 {
   "lazyCodeLoading": "requiredComponents",
+  "servicemarket": true,
   "pages": [
     "pages/index/index",
     "pages/fund-list/fund-list",
